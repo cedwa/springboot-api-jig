@@ -11,6 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import us.cedwa.dao.DaoConfiguration;
@@ -21,13 +25,14 @@ import java.util.concurrent.TimeUnit;
  * Created by cedwa on 8/30/15.
  */
 @Configuration
+@EnableWebSecurity
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "us.cedwa.dao, us.cedwa.web.*")
 @PropertySource("classpath:/cedwa-web.properties")
 @PropertySource("classpath:/cedwa-dao.properties")
 @ContextConfiguration(classes = DaoConfiguration.class)
 @EnableWebMvc
-public class WebConfiguration {
+public class WebConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     Environment env;
@@ -42,5 +47,27 @@ public class WebConfiguration {
         factory.setPort(Integer.valueOf(env.getRequiredProperty("tomcat.port")));
         factory.setSessionTimeout(59, TimeUnit.MINUTES);
         return factory;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/home").denyAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("user").password("password").roles("USER");
     }
 }
