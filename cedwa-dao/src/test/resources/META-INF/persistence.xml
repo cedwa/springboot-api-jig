@@ -4,11 +4,11 @@
     <persistence-unit name="jpa.strapd.life">
         <class>us.cedwa.dao.entity.User</class>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
-            <property name="hibernate.connection.url" value="jdbc:postgresql://strapd-life.cwpuztbwfetv.us-east-1.rds.amazonaws.com:5432/strapd_Aug2015" />
-            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-            <property name="hibernate.connection.username" value="webuser" />
-            <property name="hibernate.connection.password" value="L0ck13" />
+            <property name="hibernate.dialect" value="" />
+            <property name="hibernate.connection.url" value="" />
+            <property name="hibernate.connection.driver_class" value=""/>
+            <property name="hibernate.connection.username" value="" />
+            <property name="hibernate.connection.password" value="" />
             <property name="hibernate.hbm2ddl.auto" value="validate" />
         </properties>
     </persistence-unit>
