@@ -1,6 +1,6 @@
 package us.cedwa.dao;
 
-import us.cedwa.dao.UserRepository;
+import us.cedwa.dao.repository.UserRepository;
 import us.cedwa.dao.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;

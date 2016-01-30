@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import us.cedwa.dao.UserRepository;
-import us.cedwa.dao.entity.User;
+import us.cedwa.dao.repository.UserRepository;
 
-@RestController()
+@RestController
+@RequestMapping(value = "/root")
 public class RootController {
 
     @Autowired
-    UserRepository userRepo;
+    UserRepository repository;
 
     @RequestMapping("/")
     @ResponseBody
@@ -20,10 +20,9 @@ public class RootController {
         return "Hello World!";
     }
 
-    @RequestMapping("/do-something")
+    @RequestMapping("/who-dat")
     @ResponseBody
     String doSomething() {
-        User user = userRepo.findByName("Chris Edwards").get(0);
-        return String.format("Hello, %s", user.getName());
+        return "cedwa, bitch!";
     }
 }
